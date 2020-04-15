@@ -15,11 +15,11 @@ public class ElevatorAction {
 
         List<Elevator> elevatorList = new ArrayList<>();
         int elevatorCount = 3;
+        int maxFloor = 10;
         for(int i = 0; i < elevatorCount; i++) {
-            elevatorList.add(new DormitoryElevator(i));
+            elevatorList.add(new DormitoryElevator(i, maxFloor));
         }
 
-        int maxFloor = 10;
         ElevatorCaller elevatorCaller = new ElevatorCaller(elevatorList, maxFloor);
 
         Integer moves = 500;

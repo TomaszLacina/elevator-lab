@@ -2,12 +2,17 @@ package pl.tomasz.lacina.elevatorlab.elevatorlab.domain;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import io.swagger.models.auth.In;
 
 import java.util.TreeSet;
+
+import static pl.tomasz.lacina.elevatorlab.elevatorlab.domain.Elevator.Direction.DOWN;
+import static pl.tomasz.lacina.elevatorlab.elevatorlab.domain.Elevator.Direction.UP;
 
 public class DormitoryElevator implements Elevator {
 
     private Integer id;
+    private Integer maxFloor;
 
     private Integer currentFloor;
     private Direction direction;
@@ -16,10 +21,13 @@ public class DormitoryElevator implements Elevator {
     private TreeSet<Integer> downwardFloors = new TreeSet<>((o1, o2) -> -1 * o1.compareTo(o2));
     private Multimap<Integer, Integer> elevatorCalls = ArrayListMultimap.create();
 
-    public DormitoryElevator(Integer id) {
+
+    public DormitoryElevator(Integer id, Integer maxFloor) {
         this.id = id;
         this.currentFloor = 0;
-        this.direction = Direction.UP;
+        this.direction = UP;
+        this.maxFloor = maxFloor;
+
     }
 
     @Override
@@ -36,12 +44,23 @@ public class DormitoryElevator implements Elevator {
     public void nextFloor(){
         TreeSet<Integer> floorSet = getFloorSet();
 
+
+
         if(floorSet.isEmpty()){
             switchDirection();
             return;
         }
 
-        currentFloor = floorSet.pollFirst();
+        if(direction == UP && currentFloor < maxFloor - 1 ){
+            currentFloor++;
+        } else if(direction == DOWN && currentFloor > 0){
+            currentFloor--;
+        }
+
+        if(currentFloor.equals(floorSet.first())) {
+            floorSet.pollFirst();
+        }
+
         if(elevatorCalls.containsKey(currentFloor)){
             elevatorCalls.removeAll(currentFloor)
                     .forEach(this::addFloorToSet);
@@ -55,7 +74,7 @@ public class DormitoryElevator implements Elevator {
     }
 
     @Override
-    public int currentFloor() {
+    public Integer currentFloor() {
         return currentFloor;
     }
 
@@ -75,14 +94,14 @@ public class DormitoryElevator implements Elevator {
     }
 
     private TreeSet<Integer> getFloorSet() {
-        return direction == Direction.UP ? upwardFloors : downwardFloors;
+        return direction == UP ? upwardFloors : downwardFloors;
     }
 
     private void switchDirection() {
-        if(direction == Direction.UP){
-            direction = Direction.DOWN;
+        if(direction == UP){
+            direction = DOWN;
         } else {
-            direction = Direction.UP;
+            direction = UP;
         }
     }
 
@@ -96,9 +115,9 @@ public class DormitoryElevator implements Elevator {
 
     private Direction getFloorDirection(Integer floor) {
         if (floor > currentFloor) {
-            return Direction.UP;
+            return UP;
         } else {
-            return Direction.DOWN;
+            return DOWN;
         }
     }
 
@@ -112,5 +131,20 @@ public class DormitoryElevator implements Elevator {
                 ", downwardFloors=" + downwardFloors +
                 ", elevatorCalls=" + elevatorCalls +
                 '}';
+    }
+
+    @Override
+    public TreeSet<Integer> getUpwardFloors() {
+        return upwardFloors;
+    }
+
+    @Override
+    public TreeSet<Integer> getDownwardFloors() {
+        return downwardFloors;
+    }
+
+    @Override
+    public Multimap<Integer, Integer> getElevatorCalls() {
+        return elevatorCalls;
     }
 }

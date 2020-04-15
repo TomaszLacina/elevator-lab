@@ -1,6 +1,16 @@
 package pl.tomasz.lacina.elevatorlab.elevatorlab.domain;
 
+import com.google.common.collect.Multimap;
+
+import java.util.TreeSet;
+
 public interface  Elevator {
+    TreeSet<Integer> getUpwardFloors();
+
+    TreeSet<Integer> getDownwardFloors();
+
+    Multimap<Integer, Integer> getElevatorCalls();
+
     /**
      * Enumeration for describing elevator's direction.
      */
@@ -20,16 +30,14 @@ public interface  Elevator {
      *
      * @return primitive integer representing the elevator.
      */
-
     int getId();
-
 
     /**
      * Reports which floor the elevator is at right now.
      *
      * @return int actual floor at the moment.
      */
-    int currentFloor();
+    Integer currentFloor();
 
     Integer distanceFrom(Integer floor);
 
