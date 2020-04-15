@@ -1,13 +1,11 @@
 package pl.tomasz.lacina.elevatorlab.elevatorlab.service;
 
-
-
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import pl.tomasz.lacina.elevatorlab.elevatorlab.domain.DormitoryElevator;
 import pl.tomasz.lacina.elevatorlab.elevatorlab.domain.Elevator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,14 +21,18 @@ public class ElevatorService {
         return Integer.valueOf(maxFloors);
     }
 
+    public List<Elevator> getElevatorList() {
+        return  Collections.unmodifiableList(elevatorList);
+    }
+
     public void init(Integer elevatorCount, Integer floorCount){
+        this.maxFloors = floorCount;
         elevatorList = new ArrayList<>();
 
         for(int i = 0 ; i < elevatorCount ; i++) {
-            elevatorList.add(new DormitoryElevator(i));
+            elevatorList.add(new DormitoryElevator(i, maxFloors));
         }
 
-        this.maxFloors = floorCount;
     }
 
 
@@ -66,5 +68,7 @@ public class ElevatorService {
                 .map(Elevator::toString)
                 .collect(Collectors.joining());
     }
+
+
 
 }
