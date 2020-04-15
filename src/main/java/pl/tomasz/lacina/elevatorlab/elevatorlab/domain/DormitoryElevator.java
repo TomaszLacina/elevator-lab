@@ -44,8 +44,6 @@ public class DormitoryElevator implements Elevator {
     public void nextFloor(){
         TreeSet<Integer> floorSet = getFloorSet();
 
-
-
         if(floorSet.isEmpty()){
             switchDirection();
             return;
@@ -55,6 +53,8 @@ public class DormitoryElevator implements Elevator {
             currentFloor++;
         } else if(direction == DOWN && currentFloor > 0){
             currentFloor--;
+        } else {
+            switchDirection();
         }
 
         if(currentFloor.equals(floorSet.first())) {
@@ -74,7 +74,7 @@ public class DormitoryElevator implements Elevator {
     }
 
     @Override
-    public Integer currentFloor() {
+    public Integer getCurrentFloor() {
         return currentFloor;
     }
 

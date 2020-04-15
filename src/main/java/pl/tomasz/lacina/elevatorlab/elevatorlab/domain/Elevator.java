@@ -37,7 +37,7 @@ public interface  Elevator {
      *
      * @return int actual floor at the moment.
      */
-    Integer currentFloor();
+    Integer getCurrentFloor();
 
     Integer distanceFrom(Integer floor);
 
