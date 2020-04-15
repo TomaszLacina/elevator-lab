@@ -2,7 +2,6 @@ package pl.tomasz.lacina.elevatorlab.elevatorlab.domain;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import io.swagger.models.auth.In;
 
 import java.util.TreeSet;
 
@@ -131,20 +130,5 @@ public class DormitoryElevator implements Elevator {
                 ", downwardFloors=" + downwardFloors +
                 ", elevatorCalls=" + elevatorCalls +
                 '}';
-    }
-
-    @Override
-    public TreeSet<Integer> getUpwardFloors() {
-        return upwardFloors;
-    }
-
-    @Override
-    public TreeSet<Integer> getDownwardFloors() {
-        return downwardFloors;
-    }
-
-    @Override
-    public Multimap<Integer, Integer> getElevatorCalls() {
-        return elevatorCalls;
     }
 }

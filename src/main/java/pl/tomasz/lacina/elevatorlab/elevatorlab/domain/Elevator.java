@@ -1,15 +1,6 @@
 package pl.tomasz.lacina.elevatorlab.elevatorlab.domain;
 
-import com.google.common.collect.Multimap;
-
-import java.util.TreeSet;
-
 public interface  Elevator {
-    TreeSet<Integer> getUpwardFloors();
-
-    TreeSet<Integer> getDownwardFloors();
-
-    Multimap<Integer, Integer> getElevatorCalls();
 
     /**
      * Enumeration for describing elevator's direction.
